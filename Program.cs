@@ -1,6 +1,14 @@
+using dotnet_mongodb.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("MongoDB"));
+
+builder.Services.AddSingleton<IDefaultMongoDBConnectionFactory, DefaultMongoDBConnectionFactory>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
